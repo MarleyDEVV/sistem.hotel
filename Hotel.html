@@ -3,14 +3,16 @@
 <head>
 
 	<script>
-		
+		var gratuidades = 0
+		var meias = 0
+		var quartos = []
 		function usuario() {
 			var nome = prompt("Digite seu nome")
 			alert("Bem vindo ao Hotel do Goat, " + nome + " é um prazer tê-lo conosco")
 			inicio();
 		}
 
-		
+		usuario()
 		function inicio() {
 			
 			var senha = prompt("Insira a senha")
@@ -33,15 +35,84 @@
 			inicio()
 		}
 	}		
-
+		
 		function reserva_quartos() {
 			alert('HOTEL do Goat - RESERVA DE QUARTOS');
-			qntquartos = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"]
-			inicio();
-		}
+			var valordiaria = parseFloat(prompt("Digite o valor da diaria: "))
+			var dias = parseInt(prompt("Informe quantos dias de hospedagem deseja: "))
+			var total = valordiaria * dias
+
+			if(valordiaria < 1 || dias < 1 || dias > 30) {
+				alert("valores inválidos, tente novamente")
+				reserva_quartos()
+			}
+			else{
+				var total = valordiaria * dias
+				alert("O valor da diaria foi: " + total)
+			}
+
+			
+			var continuar = true
+			var nomehospede = (prompt("Insira o nome do hospede"))
+			var numquarto = parseInt(prompt("Qual o quarto para reserva? (1 - 20)?"))
+
+    		while(numquarto > 20 || numquarto < 1){
+        		alert("Opção inválida. Insira um valor de (1-20)");
+        		var numquarto = parseInt(prompt("Insira novamente qual o quarto para reserva? (1 - 20)?"))
+    			}
+
+    		while(continuar){
+    			if (quartos.includes(numquarto)) {
+				alert("Quarto está ocupado. Escolha outro.")
+				var numquarto = parseInt(prompt("Qual o quarto para reserva? (1 - 20)?"))
+				
+			} else {
+				quartos.push(numquarto);
+				alert("Quarto Livre.");
+				break;
+			}
+				
+    }
+			var confirmar = prompt("Deseja continuar? (s/n)")
+			if(confirmar === "s"){
+				var confirmar = confirm("Reserva concluída!\n" + "Hospede: " + nomehospede + "\n Valor da diaria: " + total + "\n Dias: " + dias + "\nNúmero do quarto: " + numquarto) 
+			}
+			else{
+				alert("Reserva cancelada")
+				inicio()
+			}
+    
+}
+			
 
 		function cadastro_hospedes() {
+			
+
 			alert('HOTEL do Goat - CADASTRO DE HÓSPEDES');
+
+			while(true){
+			var diaria = prompt("Insira o valor da diaria: ")
+			var nomehospede = prompt("Insira o nome do hospede: ")
+			var idade = prompt("Insira sua idade: ")
+			
+
+			if (idade <= 6){
+				alert(nomehospede + " possui gratuidade")
+				gratuidades++
+			}else if(idade >=60){
+				alert(nomehospede + " possui meia entrada")
+				meias++
+			}else{
+				alert(nomehospede + "não recebe gratuidade nem meia")
+			}
+			var cadnovo = confirm("deseja cadastrar novo hospede? ")
+			if(cadnovo){
+				cadastro_hospedes()
+			}else{
+				alert("Gratuidades: " + gratuidades + "\nMeias: " + meias)
+			}
+			
+		}
 			inicio();
 		}
 
@@ -68,7 +139,7 @@
 
 
 		
-		usuario()
+		inicio()
 		
 	</script>
 </head>
