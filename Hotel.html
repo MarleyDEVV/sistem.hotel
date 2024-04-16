@@ -1,151 +1,223 @@
 <html>
+  <head>
+    <script>
+      var listhospede = [];
+      var maxhospede = [15];
 
-<head>
+      var gratuidades = 0;
+      var meias = 0;
+      var quartos = [];
+      function usuario() {
+        var nome = prompt("Digite seu nome");
+        alert(
+          "Bem vindo ao Hotel do Goat, " + nome + " é um prazer tê-lo conosco"
+        );
+        inicio();
+      }
 
-	<script>
-		var gratuidades = 0
-		var meias = 0
-		var quartos = []
-		function usuario() {
-			var nome = prompt("Digite seu nome")
-			alert("Bem vindo ao Hotel do Goat, " + nome + " é um prazer tê-lo conosco")
-			inicio();
-		}
+      usuario();
+      function inicio() {
+        var senha = prompt("Insira a senha");
+        if (senha == 2678) {
+          var escolha = parseInt(
+            prompt(
+              "Selecione uma opção 1.) Cadastro de Hóspedes 2.) Pesquisar 3.) Listar 4.) Eventos 5.) Sair"
+            )
+          );
 
-		usuario()
-		function inicio() {
-			
-			var senha = prompt("Insira a senha")
-			if(senha == 2678){
-			var escolha = parseInt(prompt('Selecione uma opção 1.) Reserva de Quartos 2.) Cadastro de Hóspedes 3.) Abastecimento de Carros 4.) Sair'));
+          if (escolha === 1) {
+            cadastro_hospedes();
+          } else if (escolha === 2) {
+            pesquisar();
+          } else if (escolha === 3) {
+            listar();
+          } else if (escolha === 4) {
+            eventos();
+          } else if (escolha === 5) {
+            sair();
+          } else {
+            erro();
+          }
+        } else {
+          alert("Senha incorreta, tente novamente");
+          inicio();
+        }
+      }
 
-			if (escolha === 1) {
-				reserva_quartos();
-			} else if (escolha === 2) {
-				cadastro_hospedes();
-			} else if (escolha === 3) {
-				abastecer_carros();
-			} else if (escolha === 4) {
-				sair();
-			} else {
-				erro();
-			}
-		}else{
-			alert("Senha incorreta, tente novamente")
-			inicio()
-		}
-	}		
-		
-		function reserva_quartos() {
-			alert('HOTEL do Goat - RESERVA DE QUARTOS');
-			var valordiaria = parseFloat(prompt("Digite o valor da diaria: "))
-			var dias = parseInt(prompt("Informe quantos dias de hospedagem deseja: "))
-			var total = valordiaria * dias
+      function cadastro_hospedes() {
+        alert("HOTEL do Goat - RESERVA DE QUARTOS");
+        var valordiaria = parseFloat(prompt("Digite o valor da diaria: "));
+        var dias = parseInt(
+          prompt("Informe quantos dias de hospedagem deseja: ")
+        );
+        var total = valordiaria * dias;
 
-			if(valordiaria < 1 || dias < 1 || dias > 30) {
-				alert("valores inválidos, tente novamente")
-				reserva_quartos()
-			}
-			else{
-				var total = valordiaria * dias
-				alert("O valor da diaria foi: " + total)
-			}
+        if (valordiaria < 1 || dias < 1 || dias > 30) {
+          alert("valores inválidos, tente novamente");
+          cadastro_hospedes();
+        } else {
+          alert("O valor da diaria foi: " + total);
+        }
 
-			
-			var continuar = true
-			var nomehospede = (prompt("Insira o nome do hospede"))
-			var numquarto = parseInt(prompt("Qual o quarto para reserva? (1 - 20)?"))
+        while (true) {
+          var continuar = true;
 
-    		while(numquarto > 20 || numquarto < 1){
-        		alert("Opção inválida. Insira um valor de (1-20)");
-        		var numquarto = parseInt(prompt("Insira novamente qual o quarto para reserva? (1 - 20)?"))
-    			}
+          var nomehospede = prompt("Insira o nome do hospede"); //inserir o hospede na lista que sera consultado na função pesquisa()
+          if (listhospede.length >= maxhospede) {
+            alert(
+              "Maximo de cadastros atingindo. Não é possível cadastrar mais hóspedes."
+            );
+            return;
+          }else{
+            listhospede.push(nomehospede)
+          }
 
-    		while(continuar){
-    			if (quartos.includes(numquarto)) {
-				alert("Quarto está ocupado. Escolha outro.")
-				var numquarto = parseInt(prompt("Qual o quarto para reserva? (1 - 20)?"))
-				
-			} else {
-				quartos.push(numquarto);
-				alert("Quarto Livre.");
-				break;
-			}
-				
-    }
-			var confirmar = prompt("Deseja continuar? (s/n)")
-			if(confirmar === "s"){
-				var confirmar = confirm("Reserva concluída!\n" + "Hospede: " + nomehospede + "\n Valor da diaria: " + total + "\n Dias: " + dias + "\nNúmero do quarto: " + numquarto) 
-			}
-			else{
-				alert("Reserva cancelada")
-				inicio()
-			}
-    
-}
-			
+          var idade = prompt("Insira sua idade: ");
+          if (idade <= 6) {
+            alert(nomehospede + " possui gratuidade");
+            gratuidades++;
+          } else if (idade >= 60) {
+            alert(nomehospede + " possui meia entrada");
+            meias++;
+          } else {
+            alert(nomehospede + "não recebe gratuidade nem meia");
+          }
 
-		function cadastro_hospedes() {
-			
+          var numquarto = parseInt(
+            prompt("Qual o quarto para reserva? (1 - 20)?")
+          );
 
-			alert('HOTEL do Goat - CADASTRO DE HÓSPEDES');
+          while (numquarto > 20 || numquarto < 1) {
+            alert("Opção inválida. Insira um valor de (1-20)");
+            var numquarto = parseInt(
+              prompt("Insira novamente qual o quarto para reserva? (1 - 20)?")
+            );
+          }
 
-			while(true){
-			var diaria = prompt("Insira o valor da diaria: ")
-			var nomehospede = prompt("Insira o nome do hospede: ")
-			var idade = prompt("Insira sua idade: ")
-			
+          while (continuar) {
+            if (quartos.includes(numquarto)) {
+              alert("Quarto está ocupado. Escolha outro.");
+              var numquarto = parseInt(
+                prompt("Qual o quarto para reserva? (1 - 20)?")
+              );
+            } else {
+              quartos.push(numquarto);
+              alert("Quarto Livre.");
+              break;
+            }
+          }
 
-			if (idade <= 6){
-				alert(nomehospede + " possui gratuidade")
-				gratuidades++
-			}else if(idade >=60){
-				alert(nomehospede + " possui meia entrada")
-				meias++
-			}else{
-				alert(nomehospede + "não recebe gratuidade nem meia")
-			}
-			var cadnovo = confirm("deseja cadastrar novo hospede? ")
-			if(cadnovo){
-				cadastro_hospedes()
-			}else{
-				alert("Gratuidades: " + gratuidades + "\nMeias: " + meias)
-			}
-			
-		}
-			inicio();
-		}
+          var confirmar = prompt("Deseja continuar? (s/n)");
+          if (confirmar === "s") {
+            var confirme = confirm(
+              "Reserva concluída!\n" +
+                "Hospede: " +
+                nomehospede +
+                "\nDias: " +
+                dias +
+                "\nQuarto: " +
+                numquarto +
+                "\nTotal a ser pago R$" +
+                total
+            );
+          } else {
+            alert("Reserva cancelada");
+            inicio();
+          }
+          var cadnovo = confirm("deseja cadastrar novo hospede? ");
+          if (cadnovo) {
+            cadastro_hospedes();
+          } else {
+            alert("Gratuidades: " + gratuidades + "\nMeias: " + meias);
+          }
 
-		function abastecer_carros() {
-			alert('HOTEL do Goat - ABASTECER');
-			inicio();
-		}
+          inicio();
+        }
+      }
 
-		function erro() {
-			alert('Por favor, informe um número entre 1 e 4');
-			inicio();
-		}
+      
+      function pesquisar() {
+        alert("HOTEL do Goat - PESQUISA DE HÓSPEDES");
+        
+        var nomehospede = prompt("Insira o nome do hospede que procura: ");
 
-		function sair() {
-			var confirma = confirm('Você deseja sair?');
-			if (confirma) {
-				window.close();
-			} else {
-				inicio();
-			}
-		}
+        while (listhospede) {
+          if (listhospede.includes(nomehospede)) {
+            alert("Hospede" + nomehospede + "encontrado!");
+            pesquisar();
+          } else {
+            alert("Hospede não encontrado");
+            inicio();
+          }
+          break;
+        }
 
+        inicio();
+      }
 
+      function listar() {
+        alert("HOTEL do Goat - LISTAR");
 
+        alert(listhospede)
+        inicio();
+      }
 
-		
-		inicio()
-		
-	</script>
-</head>
+      function eventos(){
+        alert("HOTEL do Goat - EVENTOS")
 
-<body>
+        var convidados = prompt("Quantos convidados são esperados para o evento?")
+        if(convidados > 350 || convidados < 0 ){
+          alert ("Dados invalidos, insira novamente")
+          eventos()
+        }else if(convidados <= 220){
+          alert("Auditório recomendado: LARANJA (150 Lugares - 70 adicionais possiveis)")
+        }else {
+          alert("Auditório recomendado: COLORADO (350 Lugares)")
+        }
 
-</body>
+        var diasemana = prompt("Informe o dia da semana que deseja realizar o evento:" + "\n(segunda - terca - quarta - quinta - sexta - sabado - domingo)")
 
+        var horario = parseInt(prompt("Informe o horário do evento:"))
+          if(diasemana == "segunda" || "terca" || "quarta" || "quinta" || "sexta"){
+            if(horario >= 7 && horario <= 23){
+              alert("HORÁRIO DISPONIVEL!")
+              alert("Dia da semana escolhido: " + diasemana + "\nHorário: " + horario)
+            }else if (horario < 7 || horario > 23){
+              alert("HORÁRIO INVALIDO!")
+              eventos()
+            }else {
+              if (horario == "sabado" || "domingo"){
+                horario >= 7 && horario <= 23
+                alert("HORÁRIO DISPONIVEL!")
+                alert("Dia da semana escolhido: " + diasemana + "\nHorário: " + horario)
+              }else{
+                horario < 7 || horario > 23
+                alert("HORÁRIO INVALIDO!")
+                eventos()
+              }
+              
+
+            }
+          }
+      }
+
+      function erro() {
+        alert("Por favor, informe um número entre 1 e 4");
+        inicio();
+      }
+
+      function sair() {
+        var confirma = confirm("Você deseja sair?");
+        if (confirma) {
+          window.close();
+        } else {
+          inicio();
+        }
+      }
+
+      inicio();
+    </script>
+  </head>
+
+  <body></body>
 </html>
