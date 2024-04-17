@@ -21,7 +21,7 @@
         if (senha == 2678) {
           var escolha = parseInt(
             prompt(
-              "Selecione uma opção 1.) Cadastro de Hóspedes 2.) Pesquisar 3.) Listar 4.) Eventos 5.) Sair"
+              "Selecione uma opção 1.) Cadastro de Hóspedes 2.) Pesquisar 3.) Listar 4.) Eventos 5.) Alcool ou Gasolina  6.) Ar puro 7.) Sair"
             )
           );
 
@@ -34,8 +34,12 @@
           } else if (escolha === 4) {
             eventos();
           } else if (escolha === 5) {
+            alcoolygasolina();
+          }else if (escolha === 6) {
+            arpuro();
+          }else if (escolha === 7) {
             sair();
-          } else {
+          }else {
             erro();
           }
         } else {
@@ -165,7 +169,10 @@
       function eventos(){
         alert("HOTEL do Goat - EVENTOS")
 
+        var empresa = prompt("Informe o nome da empresa que está fazendo a reserva:")
         var convidados = prompt("Quantos convidados são esperados para o evento?")
+        var duracaoevento = parseInt(prompt("Quantas horas de duração terá o evento?"))
+
         if(convidados > 350 || convidados < 0 ){
           alert ("Dados invalidos, insira novamente")
           eventos()
@@ -181,7 +188,7 @@
           if(diasemana == "segunda" || "terca" || "quarta" || "quinta" || "sexta"){
             if(horario >= 7 && horario <= 23){
               alert("HORÁRIO DISPONIVEL!")
-              alert("Dia da semana escolhido: " + diasemana + "\nHorário: " + horario)
+              
             }else if (horario < 7 || horario > 23){
               alert("HORÁRIO INVALIDO!")
               eventos()
@@ -189,17 +196,78 @@
               if (horario == "sabado" || "domingo"){
                 horario >= 7 && horario <= 23
                 alert("HORÁRIO DISPONIVEL!")
-                alert("Dia da semana escolhido: " + diasemana + "\nHorário: " + horario)
+                
               }else{
                 horario < 7 || horario > 23
                 alert("HORÁRIO INVALIDO!")
                 eventos()
               }
-              
-
             }
+            alert("Auditório reservado para empresa:" + empresa + "\nDia da semana: " + diasemana + " às " + horario + "hs" + "\nCom duração de: " + duracaoevento)
           }
+
+            var garcom = Math.ceil(convidados/12) 
+            var custogarcom = (garcom*10.50)*duracaoevento
+
+            alert("A quantidade de garçons recomendada é de: " + garcom + "\nTotal do valor a ser pago pela duração do evento: " + custogarcom)
+
+            var cafe = 0.2 * convidados
+            var agua = 0.5 * convidados
+            var salgados = 7 * convidados
+
+            var totalcafe = 0.8 * cafe;
+            var totalagua = 0.4 *agua;
+            var totalsalgado = 34 * salgados
+
+            
+            alert("o total de café será: " + cafe + " litros\nTotalizando: R$" + totalcafe + "a ser pago \nágua será: " + agua + " litros\nTotalizando: R$" + totalagua + "a ser pago \nsalgados será: " + salgados + "\nTotalizando: R$" + totalsalgado + "a ser pago")  
       }
+
+      function alcoolygasolina(){
+            var alcool30porcento = 0.7
+            var tanquecombustivel = 42
+            
+            var alcoolwayne = parseFloat(prompt("Qual o valor do álcool no posto Wayne Oil?"))
+            var gasolinawayne = parseFloat(prompt("Qual o valor da gasolina no posto Wayne Oil?"))
+
+            var alcoolstark = parseFloat(prompt("Qual o valor do álcool no posto Stark Petrol?"))
+            var gasolinastark = parseFloat(prompt("Qual o valor da gasolina no posto Stark Petrol?"))
+
+            if(alcoolwayne < alcoolstark){
+              alert("O alcool do posto Wayne Oil está mais barato")
+            }
+            else {alcoolstark < alcoolwayne
+              alert("O alcool do posto Stark Petrol está mais barato")
+            }
+            if(gasolinawayne < gasolinastark){
+              alert("A gasolina do posto Wayne Oil está mais barato")
+            }
+            else {gasolinastark < gasolinawayne
+              alert("A gasolina do posto Stark Petrol está mais barato")
+            }
+      }
+
+      function arpuro(){
+        var empresa = prompt("Qual o nome da empresa?")
+        var valoraparelho = parseInt(prompt("Qual o valor por aparelho?"))
+        var qntdaparelhos = parseInt(prompt("Qual a quantidade de aparelhos aparelhos?"))
+        var desconto = parseInt(prompt("Qual a porcentagem de desconto?"))
+        var qntminima = parseInt(prompt( "Qual o número mínimo de aparelhos para conseguir o desconto?"))
+
+        var custototal = valoraparelho * qntdaparelhos
+
+        if(qntdaparelhos >= qntminima){
+          custototal = custototal - (custototal*(desconto/100))
+        }
+        alert("O serviço para a empresa " + empresa + " custará R$" + custototal)
+
+        var confirmar = prompt("Deseja continuar? (s/n)");
+          if (confirmar === "s") {
+            arpuro()
+      }else{
+        inicio()
+      }
+    }
 
       function erro() {
         alert("Por favor, informe um número entre 1 e 4");
